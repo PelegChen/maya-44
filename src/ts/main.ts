@@ -72,11 +72,16 @@ const file =  'cake.glb'
 let imageObj: THREE.Object3D<THREE.Object3DEventMap>;
 // '/Gingerbread House.glb'
 loader.load(file, (gltf: { scene: Object3D<Object3DEventMap> }) => {
-    imageObj = gltf.scene;
-    // controlling the position of the object
-   gltf.scene.position.y = -0.12;
+    gltf.scene.position.y = -0.12;
+    const bounds = new THREE.Box3().setFromObject(gltf.scene);
+    const center = bounds.getCenter(new THREE.Vector3());
+    const rotationPivot = new THREE.Group();
+    rotationPivot.position.copy(center);
+    gltf.scene.position.sub(center);
+    rotationPivot.add(gltf.scene);
 
-    scene.add(gltf.scene);
+    imageObj = rotationPivot;
+    scene.add(rotationPivot);
     hideLoader();
 }, undefined, (error: any) => {
     console.error('An error happened', error);
@@ -101,4 +106,3 @@ const loop = () => {
 
 }
 loop();
-
