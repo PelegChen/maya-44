@@ -8,6 +8,8 @@ import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls'
 import {MeshoptDecoder} from 'three/examples/jsm/libs/meshopt_decoder.module.js'
 
 const scene = new THREE.Scene();
+const configuredRotationSpeed = Number(import.meta.env.VITE_CAKE_ROTATION_SPEED);
+const cakeRotationSpeed = Number.isFinite(configuredRotationSpeed) ? configuredRotationSpeed : 0.1;
 
  // scene.background = new THREE.Color('#77eded');
 // creat our sphere
@@ -89,13 +91,14 @@ window.addEventListener('resize', async () => {
     renderer.setSize(sizes.width, sizes.height);
 })
 
+const clock = new THREE.Clock();
 const loop = () => {
+    const deltaTime = clock.getDelta();
     controls.update();
-    imageObj?.rotateOnAxis(new THREE.Vector3(0, -0.1, 0), 0.001);
+    if (imageObj) imageObj.rotation.y -= cakeRotationSpeed * deltaTime;
     renderer.render(scene, camera);
     window.requestAnimationFrame(loop);
 
 }
 loop();
-
 
