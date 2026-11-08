@@ -26,6 +26,8 @@ build with `npm run build`; preview it locally with `npm run preview`.
    The page uses the Hebrew fonts in `src/assets/fonts`.
 4. Update the Three.js animation in `src/ts/main.ts` and `src/ts/sky.ts` if you
    want to change the 3D scene.
+5. Set `VITE_CAKE_ROTATION_SPEED` in `.env.production` to control the cake's
+   rotation speed in radians per second. Set it to `0` to stop the rotation.
 
 The site is configured for right-to-left Hebrew text. Keep `lang="he"` and
 `dir="rtl"` on the corresponding HTML elements when adapting the copy.
